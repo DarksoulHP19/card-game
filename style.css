@@ -1,81 +1,34 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: antiquewhite;
-    font-family:'VALORANT', Times, serif;
-}
 
-
-h1 {
-    font-size: 50px;
-    font-family:'VALORANT', Times, serif;
-    color: antiquewhite;
-  }
-  
-.disabled{
-    opacity: .5;
-    pointer-events: none;
-}
-.disabled span{
-    visibility: hidden;
-}
-
-
-
-body{
-    height: 120vh;
-    background-image:url("Gaming-0_generated.jpg");
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    
-}
-.choose_diff button{
-    height: 40px;
-    width: 100px;
-    margin: 5px;
-    color: white;
-    border-radius: 10PX;
-    border-color: black;
-    background-color: red;
-}
-
-
-section{
-    display: grid;
-    grid-template-columns: repeat(4,8rem);
-    grid-template-rows: repeat(4,8rem);
-    grid-gap: 2rem;
-perspective: 800px;
-}
-
-
-.card{
-    position: relative;
+  .card {
     transform-style: preserve-3d;
-    transition: all 2s cubic-bezier(0.175,0.885,0.32,1.275); 
-    transform: rotateY(0deg);
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
-}
-.face,.back{
+    transition: transform 0.6s;
+    cursor: pointer;
+  }
+
+  .card.rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .face,
+  .back {
+    backface-visibility: hidden;
+    position: absolute;
     width: 100%;
     height: 100%;
-    position: absolute;
-    pointer-events: none;
+    border-radius: 0.5rem;
+  }
 
-}
-
-.back{
-    background-color: darkslategray;
-    backface-visibility: hidden;
-
-}
-.togglecard{
+  .face {
     transform: rotateY(180deg);
-}
-.face{
-    transform: rotateY(-180deg);
-}
+    z-index: 2;
+  }
+
+  .back {
+    background: #4b5563; /* Tailwind gray-600 */
+    z-index: 1;
+  }
+
+  .card.flipped {
+    transform: rotateY(180deg);
+  }
 

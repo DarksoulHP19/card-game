@@ -2,27 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memory Game</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1>Memory game </h1>
-    <br>
-    
-    <h2>Choose Difficlty Level</h2>
-    <div class="choose_diff">
-      <button id="e">Easy</button><br />
-      <button id="m">Medium</button><br />
-      <button id="h">Hard</button>
-    </div>
-    <br />
-    <div class="container disabled">
-      <h2>Lives : <span class="playersLivescount"></span></h2>
-      <section></section>
-    </div>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <script src="game.js"></script>
-  </body>
+  </head>
+  </head>
+<body class="min-h-screen bg-gradient-to-tr from-blue-600 via-purple-700 to-cyan-400 text-white flex flex-col items-center justify-start p-4 font-sans">
+  <main class="w-full max-w-4xl flex flex-col items-center space-y-6">
+<div class="glass-container p-6 rounded-xl max-w-3xl w-full mx-auto bg-white/20 backdrop-blur-md border border-white/30">
+  <h1 class="text-4xl text-center font-bold tracking-wider text-red-400 mt-4">🎮 Memory Card Game</h1>
+<br>
+  <!-- Difficulty Selection -->
+  <section class="flex flex-col items-center gap-2">
+    <h2 class="text-xl font-semibold text-white">Choose Difficulty</h2>
+    <div class="flex gap-4">
+      <button id="e" class="px-4 py-2 rounded bg-red-500 hover:bg-red-600">Easy</button>
+      <button id="m" class="px-4 py-2 rounded bg-yellow-500 hover:bg-yellow-600">Medium</button>
+      <button id="h" class="px-4 py-2 rounded bg-green-500 hover:bg-green-600">Hard</button>
+    </div>
+  </section>
+
+  <!-- Game Board + Lives -->
+  <section class="w-full container disabled opacity-40 pointer-events-none transition-all duration-500 mt-6">
+    <div class="text-lg mb-4 text-center text-white">❤️ Lives Left: <span class="playersLivescount font-bold">--</span></div>
+  </section>
+</div>
+
+ <div class="game-board grid grid-cols-4 gap-3 place-items-center px-4 max-w-4xl mx-auto">
+        <!-- Cards will be injected here -->
+      </div>
+    </section>
+  </main>
+<script src="game.js"></script>
+
+</body>
+
+
+
 </html>
