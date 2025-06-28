@@ -2,7 +2,7 @@ const section = document.querySelector(".game-board");
 const playersLivescount = document.querySelector(".playersLivescount");
 let playerLives = 0;
 
-playersLivescount.textContent = playerLives;
+playersLivescount.textContent = "--";
 
 const sounds = {
   flip: new Audio("./sounds/flip.wav"),
@@ -51,7 +51,7 @@ const generateCards = () => {
     `;
 
     card.addEventListener("click", (e) => {
-      if (!card.classList.contains("flipped") && document.querySelectorAll(".flipped").length < 2) {
+      if (!card.classList.contains("flipped") && document.querySelectorAll(".flipped").length < 2 && playerLives > 0) {
         sounds.flip.play();
         card.classList.add("flipped", "rotate-y-180");
         checkCards(e);
@@ -101,12 +101,14 @@ const checkCards = (e) => {
 const restart = (msg) => {
   alert(msg);
   section.innerHTML = "";
-  playerLives = 20;
-  playersLivescount.textContent = playerLives;
-  generateCards();
+  playerLives = 0;
+  playersLivescount.textContent = "--";
+  // Re-disable the container until difficulty is selected again
+  document.querySelector(".container").classList.add("disabled", "opacity-40", "pointer-events-none");
 };
 
-generateCards();
+// Don't auto-generate cards - wait for difficulty selection
+// generateCards(); // Remove this line
 
 // Difficulty selectors
 document.querySelector("#e").addEventListener("click", () => {
