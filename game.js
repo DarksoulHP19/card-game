@@ -1,5 +1,10 @@
 const section = document.querySelector(".game-board");
 const playersLivescount = document.querySelector(".playersLivescount");
+const gameOverModal = document.querySelector("#game-over-modal");
+const modalTitle = document.querySelector("#modal-title");
+const modalMessage = document.querySelector("#modal-message");
+const playAgainBtn = document.querySelector("#play-again-btn");
+
 let playerLives = 0;
 
 playersLivescount.textContent = "--";
@@ -10,6 +15,12 @@ const sounds = {
   wrong: new Audio("./sounds/wrong.wav"),
   win: new Audio("./sounds/win.wav"),
   lose: new Audio("./sounds/lose.wav"),
+};
+
+const playSound = (sound) => {
+  if (sounds[sound]) {
+    sounds[sound].play().catch(e => console.warn(`Sound ${sound} could not be played:`, e.message));
+  }
 };
 
 const getData = () => [
@@ -40,20 +51,20 @@ const generateCards = () => {
   const cardData = randomize();
   cardData.forEach(item => {
     const card = document.createElement("div");
-    card.className = "card w-20 h-24 sm:w-24 sm:h-28 bg-gray-800 rounded relative perspective";
+    card.className = "card";
     card.setAttribute("name", item.name);
 
     card.innerHTML = `
-      <div class="face absolute inset-0 backface-hidden rounded overflow-hidden transition-transform duration-700 transform rotate-y-180">
+      <div class="face">
         <img src="${item.imgSrc}" class="w-full h-full object-cover" />
       </div>
-      <div class="back absolute inset-0 bg-gray-600 backface-hidden rounded transition-transform duration-700"></div>
+      <div class="back"></div>
     `;
 
     card.addEventListener("click", (e) => {
-      if (!card.classList.contains("flipped") && document.querySelectorAll(".flipped").length < 2 && playerLives > 0) {
-        sounds.flip.play();
-        card.classList.add("flipped", "rotate-y-180");
+      if (!card.classList.contains("flipped") && !card.classList.contains("matched") && document.querySelectorAll(".card.flipped").length < 2 && playerLives > 0) {
+        playSound("flip");
+        card.classList.add("flipped");
         checkCards(e);
       }
     });
@@ -63,64 +74,80 @@ const generateCards = () => {
 };
 
 const checkCards = (e) => {
-  const flippedCards = document.querySelectorAll(".flipped");
+  const flippedCards = document.querySelectorAll(".card.flipped");
 
   if (flippedCards.length === 2) {
     const [first, second] = flippedCards;
 
     if (first.getAttribute("name") === second.getAttribute("name")) {
-      sounds.match.play();
+      playSound("match");
       flippedCards.forEach(card => {
         card.classList.remove("flipped");
-        card.style.pointerEvents = "none";
+        card.classList.add("matched");
       });
     } else {
-      sounds.wrong.play();
+      playSound("wrong");
       flippedCards.forEach(card => {
         setTimeout(() => {
-          card.classList.remove("flipped", "rotate-y-180");
+          card.classList.remove("flipped");
         }, 1000);
       });
 
       playerLives--;
       playersLivescount.textContent = playerLives;
+      
+      const livesDisplay = document.querySelector("#lives-display");
+      livesDisplay.classList.add("pulse-red");
+      setTimeout(() => livesDisplay.classList.remove("pulse-red"), 1000);
+
       if (playerLives === 0) {
-        sounds.lose.play();
-        restart("Try again 😢");
+        playSound("lose");
+        showModal(false);
       }
     }
 
-    const allFlipped = document.querySelectorAll(".card.rotate-y-180");
-    if (allFlipped.length === 16) {
-      sounds.win.play();
-      restart("🎉 You won!");
+    const allCards = document.querySelectorAll(".card");
+    const allMatched = document.querySelectorAll(".card.matched");
+    if (allMatched.length === allCards.length && allCards.length > 0) {
+      playSound("win");
+      showModal(true);
     }
   }
 };
 
-const restart = (msg) => {
-  alert(msg);
+const showModal = (isWin) => {
+  if (isWin) {
+    modalTitle.textContent = "You Won! 🎉";
+    modalTitle.style.color = "#4ade80"; // Tailwind green-400
+    modalMessage.textContent = "Amazing memory! You matched all the pairs.";
+  } else {
+    modalTitle.textContent = "Game Over 😢";
+    modalTitle.style.color = "#f87171"; // Tailwind red-400
+    modalMessage.textContent = "Don't give up! Try again to improve your score.";
+  }
+  gameOverModal.classList.add("visible");
+};
+
+const restartGame = () => {
+  gameOverModal.classList.remove("visible");
   section.innerHTML = "";
   playerLives = 0;
   playersLivescount.textContent = "--";
-  // Re-disable the container until difficulty is selected again
   document.querySelector(".container").classList.add("disabled", "opacity-40", "pointer-events-none");
 };
 
-// Don't auto-generate cards - wait for difficulty selection
-// generateCards(); // Remove this line
+playAgainBtn.addEventListener("click", restartGame);
 
-// Difficulty selectors
 document.querySelector("#e").addEventListener("click", () => {
-  playerLives = 20;
-  startGame();
-});
-document.querySelector("#m").addEventListener("click", () => {
   playerLives = 15;
   startGame();
 });
-document.querySelector("#h").addEventListener("click", () => {
+document.querySelector("#m").addEventListener("click", () => {
   playerLives = 10;
+  startGame();
+});
+document.querySelector("#h").addEventListener("click", () => {
+  playerLives = 7;
   startGame();
 });
 
