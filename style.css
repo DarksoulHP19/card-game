@@ -12,6 +12,7 @@
   perspective: 2000px;
 }
 
+/* Ensure touch targets are accessible and scale well */
 .card {
   transform-style: preserve-3d;
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, filter 0.3s ease;
@@ -19,6 +20,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
+  /* Remove min-width/min-height to allow full responsiveness within grid columns */
 }
 
 .game-title {
@@ -41,18 +43,11 @@
 .difficulty-buttons {
   font-family: 'Bungee', cursive;
 }
-/* Ensure touch targets are accessible */
-@media (max-width: 640px) {
-  .card {
-    min-width: 80px;
-    min-height: 80px;
-  }
-}
 
 .card:hover:not(.flipped) {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-4px) scale(1.02); /* Reduced from -8px for better mobile UX */
   filter: brightness(1.1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 .card.flipped,
@@ -119,12 +114,4 @@
 
 #game-over-modal.visible > div {
   transform: scale(1);
-}
-
-/* Responsive Grid Adjustments */
-@media (max-width: 380px) {
-  .game-board {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-  }
 }

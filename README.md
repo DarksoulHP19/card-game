@@ -1,27 +1,29 @@
 # 🃏 Memory Card Game
 
-A vibrant and interactive web-based memory game built with modern web technologies. Challenge your memory by matching pairs of cards before your lives run out!
+A vibrant, zero-asset, and interactive web-based memory game built with modern web technologies. Challenge your memory by matching pairs of cards before your lives run out!
 
 ## 🚀 Features
 
-- **Dynamic Difficulty**: Choose between Easy, Medium, and Hard modes.
-- **Responsive Design**: Fully playable on desktop, tablet, and mobile devices.
-- **Glassmorphism UI**: A sleek, modern interface with frosted glass effects and vibrant gradients.
-- **Interactive Gameplay**: Smooth card flip animations and real-time life tracking.
+- **Mobile-First Responsive Layout**: Fully optimized for mobile, tablet, and desktop using a responsive 4-column grid and dynamic sizing.
+- **Synthesized Audio**: Built-in sound effects (Flip, Match, Wrong, Win, Lose) using the **Web Audio API**, removing the need for external `.wav` files.
+- **Dynamic Difficulty**: Choose between Easy (15 lives), Medium (10 lives), and Hard (7 lives) modes.
+- **Glassmorphism UI**: A sleek, modern interface with backdrop blurs, vibrant gradients, and smooth card-flip animations.
+- **Zero-Dependency Icons**: Integrated SVG emoji favicon for a clean, error-free browser console.
 
 ## 🛠️ Tech Stack
 
-- **HTML5**: Semantic structure.
-- **Tailwind CSS**: Modern utility-first styling with backdrop blurs and gradients.
+- **HTML5 & SVG**: Semantic structure and lightweight iconography.
+- **Tailwind CSS v4**: Modern utility-first styling with backdrop blurs and responsive design.
 - **Vanilla JavaScript**: Game logic, state management, and DOM manipulation.
-- **Google Fonts**: "Bungee" for a playful, game-ready aesthetic.
+- **Web Audio API**: Browser-native sound synthesis for instant, reliable audio feedback.
+- **Google Fonts**: "Bungee", "Fredoka", and "Luckiest Guy" for a playful, game-ready aesthetic.
 
 ## 🎮 How to Play
 
 1. **Select Difficulty**: Choose your level to start the game.
 2. **Flip Cards**: Click on any card to reveal the image underneath.
 3. **Match Pairs**: Find the matching card to clear them from the board.
-4. **Win**: Successfully match all pairs to win the game!
+4. **Win**: Successfully match all 8 pairs before your lives reach zero!
 
 ## 👥 Contributors
 

@@ -4,36 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Memory Game</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Fredoka:wght@600&family=Luckiest+Guy&display=swap" rel="stylesheet">
   </head>
-<body class="min-h-screen bg-gradient-to-tr from-blue-600 via-purple-700 to-cyan-400 text-white flex flex-col items-center justify-start p-4 font-sans">
-  <main class="w-full max-w-4xl flex flex-col items-center space-y-6">
-<div class="glass-container p-6 rounded-xl max-w-3xl w-full mx-auto bg-white/20 backdrop-blur-md border border-white/30">
-  <h1 class="game-title box-decoration-clone bg-linear-to-r from-indigo-600 to-pink-500 px-30 text-white text-4xl text-center font-bold tracking-wider mt-4">
+<body class="min-h-screen bg-gradient-to-tr from-blue-600 via-purple-700 to-cyan-400 text-white flex flex-col items-center justify-start p-2 sm:p-4 font-sans">
+  <main class="w-full max-w-4xl flex flex-col items-center space-y-3 md:space-y-6">
+<div class="glass-container p-3 sm:p-6 md:p-8 rounded-xl max-w-3xl w-full mx-auto bg-white/20 backdrop-blur-md border border-white/30">
+  <h1 class="game-title box-decoration-clone bg-linear-to-r from-indigo-600 to-pink-500 px-4 sm:px-8 md:px-12 py-2 text-white text-xl sm:text-2xl md:text-4xl text-center font-bold tracking-wider mt-2 md:mt-4 rounded-lg">
   🎮 Memory Card Game
 </h1>
 <br>
   <!-- Difficulty Selection -->
-  <section class="flex flex-col items-center gap-2">
-    <h2 class="text-xl font-semibold text-white">Choose Difficulty</h2>
-    <div class="difficulty-buttons flex gap-4">
-      <button id="e" class="px-4 py-2 rounded bg-red-500 hover:bg-red-600">Easy</button>
-      <button id="m" class="px-4 py-2 rounded bg-yellow-500 hover:bg-yellow-600">Medium</button>
-      <button id="h" class="px-4 py-2 rounded bg-green-500 hover:bg-green-600">Hard</button>
+  <section class="flex flex-col items-center gap-2 md:gap-3">
+    <h2 class="text-base sm:text-lg md:text-xl font-semibold text-white">Choose Difficulty</h2>
+    <div class="difficulty-buttons flex flex-wrap justify-center gap-2 md:gap-4">
+      <button id="e" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-red-500 hover:bg-red-600 transition-colors text-sm sm:text-base">Easy</button>
+      <button id="m" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 transition-colors text-sm sm:text-base">Medium</button>
+      <button id="h" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-green-500 hover:bg-green-600 transition-colors text-sm sm:text-base">Hard</button>
     </div>
   </section>
 
   <!-- Game Board + Lives -->
-  <section class="w-full container disabled opacity-40 pointer-events-none transition-all duration-500 mt-6">
-   <div id="lives-display" class="lives-text text-lg mb-4 text-center text-white">
+  <section class="w-full container disabled opacity-40 pointer-events-none transition-all duration-500 mt-4 md:mt-6">
+   <div id="lives-display" class="lives-text text-sm sm:text-base md:text-lg mb-3 md:mb-4 text-center text-white">
   ❤️ Lives Left: <span class="playersLivescount font-bold">--</span>
 </div>
     
-    <div class="game-board grid grid-cols-4 gap-3 place-items-center px-4 max-w-4xl mx-auto">
+    <div class="game-board grid grid-cols-4 gap-1.5 sm:gap-3 md:gap-4 place-items-center px-1 sm:px-4 max-w-4xl mx-auto">
       <!-- Cards will be injected here -->
     </div>
   </section>
@@ -41,10 +42,10 @@
 
   <!-- Game Over Modal -->
   <div id="game-over-modal" class="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-500 z-50">
-    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-3xl shadow-2xl max-w-sm w-full mx-4 text-center transform scale-90 transition-all duration-500">
-      <h2 id="modal-title" class="modal-title text-4xl font-bold mb-4"></h2>
-        <p id="modal-message" class="text-lg mb-8 text-blue-100"></p>
-          <button id="play-again-btn"class="play-again-btn w-full py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-bold text-xl hover:from-indigo-700 hover:to-pink-600 shadow-lg hover:shadow-indigo-500/50 transition-all active:scale-95">
+    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full mx-4 text-center transform scale-90 transition-all duration-500">
+      <h2 id="modal-title" class="modal-title text-2xl md:text-4xl font-bold mb-4"></h2>
+        <p id="modal-message" class="text-base md:text-lg mb-8 text-blue-100"></p>
+          <button id="play-again-btn"class="play-again-btn w-full py-3 md:py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-bold text-lg md:text-xl hover:from-indigo-700 hover:to-pink-600 shadow-lg hover:shadow-indigo-500/50 transition-all active:scale-95">
         Play Again!
       </button>
     </div>

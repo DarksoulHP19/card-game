@@ -9,18 +9,77 @@ let playerLives = 0;
 
 playersLivescount.textContent = "--";
 
-const sounds = {
-  flip: new Audio("./sounds/flip.wav"),
-  match: new Audio("./sounds/match.wav"),
-  wrong: new Audio("./sounds/wrong.wav"),
-  win: new Audio("./sounds/win.wav"),
-  lose: new Audio("./sounds/lose.wav"),
+// Web Audio API Context for synthesized sounds
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+const playSynthSound = (type) => {
+  if (!audioCtx) audioCtx = new AudioCtx();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  const now = audioCtx.currentTime;
+
+  switch (type) {
+    case 'flip':
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(400, now);
+      osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+      osc.start(now);
+      osc.stop(now + 0.1);
+      break;
+    case 'match':
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(523.25, now); // C5
+      osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.2); // E5
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+      osc.start(now);
+      osc.stop(now + 0.3);
+      break;
+    case 'wrong':
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now); // A3
+      osc.frequency.linearRampToValueAtTime(110, now + 0.2); // A2
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+      osc.start(now);
+      osc.stop(now + 0.2);
+      break;
+    case 'win':
+      osc.type = 'sine';
+      [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.frequency.setValueAtTime(freq, now + i * 0.1);
+        g.gain.setValueAtTime(0.1, now + i * 0.1);
+        g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.3);
+        o.start(now + i * 0.1);
+        o.stop(now + i * 0.1 + 0.3);
+      });
+      break;
+    case 'lose':
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.linearRampToValueAtTime(50, now + 0.5);
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.linearRampToValueAtTime(0.01, now + 0.5);
+      osc.start(now);
+      osc.stop(now + 0.5);
+      break;
+  }
 };
 
 const playSound = (sound) => {
-  if (sounds[sound]) {
-    sounds[sound].play().catch(e => console.warn(`Sound ${sound} could not be played:`, e.message));
-  }
+  // Try synthesized sound directly since files are missing
+  playSynthSound(sound);
 };
 
 const getData = () => [
