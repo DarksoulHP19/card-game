@@ -1,6 +1,6 @@
 # 🃏 Memory Card Game
 
-A vibrant, zero-asset, and interactive web-based memory game built with modern web technologies. Challenge your memory by matching pairs of cards before your lives run out!
+A vibrant, zero-asset, and interactive web-based memory game built with modern web technologies. Challenge your memory by matching pairs of cards before your lives run out.
 
 ## 🚀 Features
 
