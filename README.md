@@ -39,3 +39,5 @@ Check out the live game here: [Memory Card Game](https://darksoulhp19.github.io/
 ## 🖼️ UI Preview
 
 ![Game Screenshot](https://github.com/user-attachments/assets/8862b911-b4b1-41ad-8ae8-d147ad6ea7ef)
+
+-----------
